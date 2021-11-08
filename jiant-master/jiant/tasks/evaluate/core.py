@@ -1017,6 +1017,7 @@ def get_evaluation_scheme_for_task(task) -> BaseEvaluationScheme:
             tasks_retrieval.CosmosQATask,
             tasks_retrieval.SWAGTask,
             tasks_retrieval.HellaSwagTask,
+            tasks_retrieval.HendrycksTestTask,
             tasks_retrieval.MutualTask,
             tasks_retrieval.MutualPlusTask,
             tasks_retrieval.QuailTask,

@@ -60,4 +60,5 @@ OTHER_HF_DATASETS_TASKS = {
     "race_middle",
     "race_high",
     "quail",
+    "hendrycks_test"
 }
