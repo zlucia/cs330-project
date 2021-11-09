@@ -195,19 +195,21 @@ for task in hendrycks_test_tasks:
     hendrycks_test_hf_datasets_conversion_dict[task + '_val'] = {
         "path": "hendrycks_test",
         "name": task,
+        "label_map": {0: "A", 1: "B", 2: "C", 3: "D"},
         "phase_list": ["train", "val"],
-        "jiant_task_name": "hendrycks_test",
         # Map the "val" split in HF datasets to jiant "val" phase
-        "phase_map": {"dev": "train", "validation": "val"}
+        "phase_map": {"dev": "train", "validation": "val"},
+        "jiant_task_name": "hendrycks_test"
     }
 
     hendrycks_test_hf_datasets_conversion_dict[task + '_test'] = {
         "path": "hendrycks_test",
         "name": task,
+        "label_map": {0: "A", 1: "B", 2: "C", 3: "D"},
         "phase_list": ["train", "val"],
-        "jiant_task_name": "hendrycks_test",
         # Map the "test" split in HF datasets to jiant "val" phase
-        "phase_map": {"dev": "train", "test": "val"}
+        "phase_map": {"dev": "train", "test": "val"},
+        "jiant_task_name": "hendrycks_test"
     }
 
 HF_DATASETS_CONVERSION_DICT = {**base_hf_datasets_conversion_dict, **hendrycks_test_hf_datasets_conversion_dict}
