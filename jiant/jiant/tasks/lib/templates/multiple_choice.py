@@ -33,10 +33,6 @@ class Example(BaseExample):
         raise NotImplementedError()
 
     def tokenize(self, tokenizer):
-        print(type(self.label))
-        print(self.label)
-        import sys
-        sys.exit()
         return TokenizedExample(
             guid=self.guid,
             prompt=tokenizer.tokenize(self.prompt),

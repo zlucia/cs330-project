@@ -28,6 +28,7 @@ class HendrycksTestTask(mc_template.AbstractMultipleChoiceTask):
 	DataRow = DataRow
 	Batch = Batch
 
+	# label is of datasets.features.ClassLabel type (handles integer class labels), not string
 	CHOICE_KEYS = [0, 1, 2, 3]
 	CHOICE_TO_ID, ID_TO_CHOICE = labels_to_bimap(CHOICE_KEYS)
 	NUM_CHOICES = len(CHOICE_KEYS)
