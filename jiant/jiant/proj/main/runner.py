@@ -2,6 +2,7 @@ from typing import Dict
 from dataclasses import dataclass
 
 import torch
+import wandb
 
 import jiant.tasks.evaluate as evaluate
 import jiant.utils.torch_utils as torch_utils
@@ -15,8 +16,6 @@ from jiant.shared.runner import (
 )
 from jiant.utils.display import maybe_tqdm
 from jiant.utils.python.datastructures import InfiniteYield, ExtendedDataClassMixin
-
-import wandb
 
 
 @dataclass
