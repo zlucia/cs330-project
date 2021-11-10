@@ -37,7 +37,7 @@ class HendrycksTestTask(mc_template.AbstractMultipleChoiceTask):
 		return self._create_examples(lines=read_jsonl(self.train_path), set_type="train")
     
 	def get_val_examples(self):
-		return self._create_examples(lines=read_jsonl(self.train_path), set_type="val")
+		return self._create_examples(lines=read_jsonl(self.val_path), set_type="val")
 
 	@classmethod
 	def _create_examples(cls, lines, set_type):
