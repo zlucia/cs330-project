@@ -388,16 +388,18 @@ class SimpleAPIMultiTaskConfigurator(zconf.RunConfig):
             eval_batch_size = self.eval_batch_size
 
         # === Configure Sampler === #
-        # We sample proportionally by default, unless our training examples are capped per task
-        if self.train_examples_cap is None:
-            sampler_config = {
-                "sampler_type": "ProportionalMultiTaskSampler",
-            }
-        else:
-            sampler_config = {
-                "sampler_type": "SpecifiedProbMultiTaskSampler",
-                "task_to_unweighted_probs": capped_num_examples_dict,
-            }
+        # We sample uniformly by default
+        sampler_config = {"sampler_type": "UniformMultiTaskSampler"}
+        # # We sample proportionally by default, unless our training examples are capped per task
+        # if self.train_examples_cap is None:
+        #     sampler_config = {
+        #         "sampler_type": "ProportionalMultiTaskSampler",
+        #     }
+        # else:
+        #     sampler_config = {
+        #         "sampler_type": "SpecifiedProbMultiTaskSampler",
+        #         "task_to_unweighted_probs": capped_num_examples_dict,
+        #     }
 
         # === Build configuration === #
         # Finally, we build our big config dictionary. Congrats!
