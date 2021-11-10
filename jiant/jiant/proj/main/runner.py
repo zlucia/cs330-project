@@ -17,6 +17,8 @@ from jiant.shared.runner import (
 from jiant.utils.display import maybe_tqdm
 from jiant.utils.python.datastructures import InfiniteYield, ExtendedDataClassMixin
 
+BANDIT_SAMPLERS = ["EpsilonGreedyMultiTaskSampler", "UCBMultiTaskSampler"]
+
 
 @dataclass
 class RunnerParameters(ExtendedDataClassMixin):
@@ -56,8 +58,10 @@ class JiantRunner:
         self.device = device
         self.rparams = rparams
         self.log_writer = log_writer
+        self.prev_val_perf = {task.name: 0 for task in self.jiant_task_container.task_run_config.train_task_list}
 
         self.model = self.jiant_model
+        
 
     def run_train(self):
         for _ in self.run_train_context():
@@ -95,7 +99,10 @@ class JiantRunner:
 
     def run_train_step(self, train_dataloader_dict: dict, train_state: TrainState):
         self.jiant_model.train()
-        task_name, task = self.jiant_task_container.task_sampler.pop()
+        if self.jiant_task_container.task_sampler.name() in BANDIT_SAMPLERS:
+            task_i, task_name, task = self.jiant_task_container.task_sampler.pop()
+        else:
+            task_name, task = self.jiant_task_container.task_sampler.pop()
         task_specific_config = self.jiant_task_container.task_specific_configs[task_name]
 
         loss_val = 0
@@ -130,6 +137,9 @@ class JiantRunner:
             "train/global_step": train_state.global_steps,
             "train/" + task_name + "/loss": loss_val / task_specific_config.gradient_accumulation_steps
         })
+
+        # TODO: Decide what metric of interest (average over difficult tasks for uniform MTL?) to use
+        # Calculate validation performance on metric of interest, diff using prev, record_reward, update prev when using a bandit sampler
 
     def run_val(self, task_name_list, use_subset=None, return_preds=False, verbose=True):
         evaluate_dict = {}
@@ -315,8 +325,8 @@ def run_val(
     }
 
     wandb.log({
-        "eval/loss": eval_loss,
-        "eval/accuracy": output["metrics"].minor["acc"]
+        "eval/" + task.name + "loss": eval_loss,
+        "eval/" + task.name + "accuracy": output["metrics"].minor["acc"]
     })
     
     if return_preds:

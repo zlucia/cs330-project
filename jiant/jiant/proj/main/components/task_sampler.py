@@ -18,11 +18,17 @@ class BaseMultiTaskSampler(metaclass=abc.ABCMeta):
     def iter(self):
         yield self.pop()
 
+    def name(self):
+        raise NotImplementedError()
+
 
 class UniformMultiTaskSampler(BaseMultiTaskSampler):
     def pop(self):
         task_name = self.rng.choice(list(self.task_dict))
         return task_name, self.task_dict[task_name]
+    
+    def name(self):
+        return "UniformMultiTaskSampler"
 
 
 class ProportionalMultiTaskSampler(BaseMultiTaskSampler):
@@ -43,6 +49,9 @@ class ProportionalMultiTaskSampler(BaseMultiTaskSampler):
         task_name = self.rng.choice(self.task_names, p=self.task_p)
         return task_name, self.task_dict[task_name]
 
+    def name(self):
+        return "ProportionalMultiTaskSampler"
+
 
 class SpecifiedProbMultiTaskSampler(BaseMultiTaskSampler):
     def __init__(
@@ -61,6 +70,76 @@ class SpecifiedProbMultiTaskSampler(BaseMultiTaskSampler):
     def pop(self):
         task_name = self.rng.choice(self.task_names, p=self.task_p)
         return task_name, self.task_dict[task_name]
+
+    def name(self):
+        return "SpecifiedProbMultiTaskSampler"
+
+class EpsilonGreedyMultiTaskSampler(BaseMultiTaskSampler):
+    def __init__(
+        self,
+        task_dict: dict,
+        rng: Union[int, np.random.RandomState, None],
+        epsilon: float = 0.3,
+    ):
+        super().__init__(task_dict=task_dict, rng=rng)
+        # Fixed order list of task names
+        self.task_names = list(task_dict.keys())
+        self.epsilon = epsilon
+        self.rewards = np.array([0.0] * len(self.task_names))
+        self.rewards_cnt = np.array([0.0] * len(self.task_names))
+    
+    def pop(self):
+        if self.rng.random() <= self.epsilon:
+            i = self.rng.choice(range(self.task_names))
+        else:
+            i = np.argmax(self.rewards)
+        task_name = self.task_names[i]
+        return i, task_name, self.task_dict[task_name]
+    
+    def record_reward(self, reward: float, reward_idx: int):
+        n = self.rewards_cnt[reward_idx]
+        # Moving average
+        self.rewards[reward_idx] = (n * self.rewards[reward_idx] + reward) / (n + 1)
+        self.rewards_cnt[reward_idx] += 1
+
+    def name(self):
+        return "EpsilonGreedyMultiTaskSampler"
+
+
+class UCBMultiTaskSampler(BaseMultiTaskSampler):
+    def __init__(
+        self,
+        task_dict: dict,
+        rng: Union[int, np.random.RandomState, None],
+        c: float,
+    ):
+        super.__init__(task_dict=task_dict, rng=rng)
+        self.task_names = list(task_dict.keys())
+        # Weight on the sqrt term
+        self.c = c
+        self.rewards = np.array([0.0] * len(self.task_names))
+        self.rewards_cnt = np.array([0.0] * len(self.task_names))
+        self.t = 1
+    
+    def pop(self):
+        # If all of the arms have be pulled at least once
+        if np.count_nonzero(self.rewards_cnt) == len(self.task_names):
+            augmented = self.rewards + self.c * np.sqrt(np.log(self.t) / self.rewards_cnt)
+            i = np.argmax(augmented)
+        else:
+            i = np.argmax(np.array(self.rewards) == 0)
+        self.t += 1
+        task_name = self.task_names[i]
+        return i, task_name, self.task_dict[task_name]
+    
+    def record_reward(self, reward: float, reward_idx: int):
+        n = self.rewards_cnt[reward_idx]
+        # Moving average
+        self.rewards[reward_idx] = (n * self.rewards[reward_idx] + reward) / (n + 1)
+        self.rewards_cnt[reward_idx] += 1
+
+    def name(self):
+        return "UCBMultiTaskSampler"
 
 
 class TemperatureMultiTaskSampler(BaseMultiTaskSampler):
@@ -85,6 +164,9 @@ class TemperatureMultiTaskSampler(BaseMultiTaskSampler):
     def pop(self):
         task_name = self.rng.choice(self.task_names, p=self.task_p)
         return task_name, self.task_dict[task_name]
+
+    def name(self):
+        return "TemperatureMultiTaskSampler"
 
 
 class TimeDependentProbMultiTaskSampler(BaseMultiTaskSampler):
@@ -145,6 +227,9 @@ class TimeDependentProbMultiTaskSampler(BaseMultiTaskSampler):
     def reset_counter(self):
         self.steps = 0
 
+    def name(self):
+        return "TimeDependentProbMultiTaskSampler"
+
 
 def create_task_sampler(
     sampler_config: dict, task_dict: dict, task_to_num_examples_dict: dict, rng=None
@@ -179,6 +264,20 @@ def create_task_sampler(
             task_dict=task_dict,
             rng=rng,
             task_to_unweighted_probs=sampler_config["task_to_unweighted_probs"],
+        )
+    elif sampler_type == "EpsilonGreedyMultiTaskSampler":
+        assert len(sampler_config) == 2
+        return EpsilonGreedyMultiTaskSampler(
+            task_dict=task_dict,
+            rng=rng,
+            epsilon=sampler_config["epsilon"],
+        )
+    elif sampler_type == "UCBMultiTaskSampler":
+        assert len(sampler_config) == 2
+        return UCBMultiTaskSampler(
+            task_dict=task_dict,
+            rng=rng,
+            c=sampler_config["c"],
         )
     elif sampler_type == "TemperatureMultiTaskSampler":
         assert len(sampler_config) == 3
