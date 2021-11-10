@@ -28,7 +28,7 @@ class HendrycksTestTask(mc_template.AbstractMultipleChoiceTask):
 	DataRow = DataRow
 	Batch = Batch
 
-	CHOICE_KEYS = ["A", "B", "C", "D"]
+	CHOICE_KEYS = [0, 1, 2, 3]
 	CHOICE_TO_ID, ID_TO_CHOICE = labels_to_bimap(CHOICE_KEYS)
 	NUM_CHOICES = len(CHOICE_KEYS)
 
