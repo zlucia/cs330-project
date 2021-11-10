@@ -58,7 +58,7 @@ class JiantRunner:
         self.device = device
         self.rparams = rparams
         self.log_writer = log_writer
-        self.prev_val_perf = {task.name: 0 for task in self.jiant_task_container.task_run_config.train_task_list}
+        self.prev_val_perf = {task: 0 for task in self.jiant_task_container.task_run_config.train_task_list}
 
         self.model = self.jiant_model
         
