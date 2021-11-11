@@ -19,8 +19,8 @@ from jiant.utils.display import maybe_tqdm
 from jiant.utils.python.datastructures import InfiniteYield, ExtendedDataClassMixin
 
 BANDIT_SAMPLERS = ["EpsilonGreedyMultiTaskSampler", "UCBMultiTaskSampler"]
-LOW_PERF_TASKS = ['college_mathematics', 'business_ethics', 'abstract_algebra', 'high_school_statistics', 'college_physics', 'computer_security', 'machine_learning', 'miscellaneous', 'professional_medicine', 'elementary_mathematics', 'high_school_biology']
-# LOW_PERF_TASKS = ['college_physics', 'high_school_computer_science', 'management', 'human_sexuality', 'conceptual_physics', 'miscellaneous', 'medical_genetics', 'college_medicine', 'international_law', 'high_school_macroeconomics', 'public_relations']
+LOW_PERF_TASKS = ['college_mathematics_test', 'business_ethics_test', 'abstract_algebra_test', 'high_school_statistics_test', 'college_physics_test', 'computer_security_test', 'machine_learning_test', 'miscellaneous_test', 'professional_medicine_test', 'elementary_mathematics_test', 'high_school_biology_test']
+# LOW_PERF_TASKS = ['college_physics_test', 'high_school_computer_science_test', 'management_test', 'human_sexuality_test', 'conceptual_physics_test', 'miscellaneous_test', 'medical_genetics_test', 'college_medicine_test', 'international_law_test', 'high_school_macroeconomics_test', 'public_relations_test']
 
 
 @dataclass
