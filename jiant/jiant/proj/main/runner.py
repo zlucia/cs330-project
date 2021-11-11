@@ -3,6 +3,7 @@ from dataclasses import dataclass
 
 import torch
 import wandb
+import numpy as np
 
 import jiant.tasks.evaluate as evaluate
 import jiant.utils.torch_utils as torch_utils
@@ -18,6 +19,8 @@ from jiant.utils.display import maybe_tqdm
 from jiant.utils.python.datastructures import InfiniteYield, ExtendedDataClassMixin
 
 BANDIT_SAMPLERS = ["EpsilonGreedyMultiTaskSampler", "UCBMultiTaskSampler"]
+LOW_PERF_TASKS = ['college_mathematics', 'business_ethics', 'abstract_algebra', 'high_school_statistics', 'college_physics', 'computer_security', 'machine_learning', 'miscellaneous', 'professional_medicine', 'elementary_mathematics', 'high_school_biology']
+# LOW_PERF_TASKS = ['college_physics', 'high_school_computer_science', 'management', 'human_sexuality', 'conceptual_physics', 'miscellaneous', 'medical_genetics', 'college_medicine', 'international_law', 'high_school_macroeconomics', 'public_relations']
 
 
 @dataclass
@@ -58,7 +61,7 @@ class JiantRunner:
         self.device = device
         self.rparams = rparams
         self.log_writer = log_writer
-        self.prev_val_perf = {task: 0 for task in self.jiant_task_container.task_run_config.train_task_list}
+        self.prev_moi = 0
 
         self.model = self.jiant_model
         
@@ -138,8 +141,19 @@ class JiantRunner:
             "train/" + task_name + "/loss": loss_val / task_specific_config.gradient_accumulation_steps
         })
 
-        # TODO: Decide what metric of interest (average over difficult tasks for uniform MTL?) to use
+        # TODO: Decide what metric of interest (average over difficult tasks for independent or uniform MTL?) to use
         # Calculate validation performance on metric of interest, diff using prev, record_reward, update prev when using a bandit sampler
+        if self.jiant_task_container.task_sampler.name() in BANDIT_SAMPLERS:
+            evaluate_dict = self.run_val(LOW_PERF_TASKS)
+
+            val_accs = np.array([evaluate_dict[task_name]["metrics"].minor["acc"] for task_name in LOW_PERF_TASKS])
+            curr_moi = np.mean(val_accs)
+
+            diff = curr_moi - self.prev_moi
+            self.jiant_task_container.task_sampler.record_reward(diff, task_i)
+
+            self.prev_moi = curr_moi
+
 
     def run_val(self, task_name_list, use_subset=None, return_preds=False, verbose=True):
         evaluate_dict = {}

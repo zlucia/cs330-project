@@ -255,6 +255,9 @@ class SimpleAPIMultiTaskConfigurator(zconf.RunConfig):
     num_gpus = zconf.attr(type=int, default=None)
     train_examples_cap = zconf.attr(type=int, default=None)
     warmup_steps_proportion = zconf.attr(type=float, default=0.1)
+    sampler_type = zconf.attr(type=str, default="UniformMultiTaskSampler")
+    epsilon = zconf.attr(type=float, default=None)
+    c = zconf.attr(type=float, default=None)
 
     @classmethod
     def parse_task_name_list(cls, task_name_list_arg):
@@ -389,7 +392,13 @@ class SimpleAPIMultiTaskConfigurator(zconf.RunConfig):
 
         # === Configure Sampler === #
         # We sample uniformly by default
-        sampler_config = {"sampler_type": "UniformMultiTaskSampler"}
+        sampler_config = {"sampler_type": self.sampler_type}
+        if self.sampler_type == "EpsilonGreedyMultiTaskSampler":
+            assert self.epsilon is not None
+            sampler_config["epsilon"] = self.epsilon
+        elif self.sampler_type == "UCBMultiTaskSampler":
+            assert self.c is not None
+            sampler_config["c"] = self.c
         # # We sample proportionally by default, unless our training examples are capped per task
         # if self.train_examples_cap is None:
         #     sampler_config = {
