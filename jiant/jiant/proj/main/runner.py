@@ -144,7 +144,7 @@ class JiantRunner:
         # TODO: Decide what metric of interest (average over difficult tasks for independent or uniform MTL?) to use
         # Calculate validation performance on metric of interest, diff using prev, record_reward, update prev when using a bandit sampler
         if self.jiant_task_container.task_sampler.name() in BANDIT_SAMPLERS:
-            evaluate_dict = self.run_val(LOW_PERF_TASKS)
+            evaluate_dict = self.run_val(LOW_PERF_TASKS, use_subset=None, return_preds=False, verbose=False)
 
             val_accs = np.array([evaluate_dict[task_name]["metrics"].minor["acc"] for task_name in LOW_PERF_TASKS])
             curr_moi = np.mean(val_accs)
