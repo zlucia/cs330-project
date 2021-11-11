@@ -90,7 +90,7 @@ class EpsilonGreedyMultiTaskSampler(BaseMultiTaskSampler):
     
     def pop(self):
         if self.rng.random() <= self.epsilon:
-            i = self.rng.choice(range(self.task_names))
+            i = self.rng.choice(len(self.task_names))
         else:
             i = np.argmax(self.rewards)
         task_name = self.task_names[i]
