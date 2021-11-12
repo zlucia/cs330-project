@@ -60,7 +60,7 @@ class JiantRunner:
         self.rparams = rparams
         self.log_writer = log_writer
         self.prev_moi = None
-        self.low_perf_tasks = ['college_physics_test', 'high_school_computer_science_test', 'management_test', 'human_sexuality_test', 'conceptual_physics_test']
+        self.low_perf_tasks = ['college_mathematics_test', 'business_ethics_test', 'abstract_algebra_test', 'high_school_statistics_test', 'college_physics_test', 'computer_security_test']
 
         self.model = self.jiant_model
         
@@ -155,7 +155,7 @@ class JiantRunner:
                 self.prev_moi = curr_moi
 
 
-    def run_val(self, task_name_list, use_subset=None, return_preds=False, verbose=True, update_low_perf_tasks=False):
+    def run_val(self, task_name_list, use_subset=None, return_preds=False, verbose=True):
         evaluate_dict = {}
         val_dataloader_dict = self.get_val_dataloader_dict(
             task_name_list=task_name_list, use_subset=use_subset
@@ -176,12 +176,12 @@ class JiantRunner:
                 verbose=verbose,
             )
         
-        if self.jiant_task_container.task_sampler.name() in BANDIT_SAMPLERS and update_low_perf_tasks:
-            val_accs = np.array([evaluate_dict[task_name]["metrics"].minor["acc"] for task_name in task_name_list])
-            idx = np.argsort(val_accs)[0:5]
-            self.low_perf_tasks = [task_name_list[i] for i in idx]
-            self.prev_moi = np.mean(val_accs[idx])
-            print(self.low_perf_tasks)
+        # if self.jiant_task_container.task_sampler.name() in BANDIT_SAMPLERS and update_low_perf_tasks:
+        #     val_accs = np.array([evaluate_dict[task_name]["metrics"].minor["acc"] for task_name in task_name_list])
+        #     idx = np.argsort(val_accs)[0:6]
+        #     self.low_perf_tasks = [task_name_list[i] for i in idx]
+        #     self.prev_moi = np.mean(val_accs[idx])
+        #     print(self.low_perf_tasks)
         return evaluate_dict
 
     def run_test(self, task_name_list, verbose=True):
