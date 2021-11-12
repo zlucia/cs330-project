@@ -180,6 +180,7 @@ class JiantRunner:
             val_accs = np.array([evaluate_dict[task_name]["metrics"].minor["acc"] for task_name in task_name_list])
             idx = np.argsort(val_accs)[0:5]
             self.low_perf_tasks = [task_name_list[i] for i in idx]
+            self.prev_moi = np.mean(val_accs[idx])
             print(self.low_perf_tasks)
         return evaluate_dict
 
