@@ -1,7 +1,7 @@
 import os
 import torch
 import wandb
-
+import numpy as np
 
 import jiant.proj.main.modeling.model_setup as jiant_model_setup
 import jiant.proj.main.runner as jiant_runner

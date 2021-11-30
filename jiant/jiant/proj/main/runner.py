@@ -158,7 +158,7 @@ class JiantRunner:
                 self.prev_moi = curr_moi
 
 
-    def run_val(self, task_name_list, use_subset=None, return_preds=False, verbose=True):
+    def run_val(self, task_name_list, use_subset=None, return_preds=False, verbose=True, update_low_perf_tasks=False):
         evaluate_dict = {}
         val_dataloader_dict = self.get_val_dataloader_dict(
             task_name_list=task_name_list, use_subset=use_subset
@@ -179,7 +179,7 @@ class JiantRunner:
                 verbose=verbose,
             )
         
-        if self.jiant_task_container.task_sampler.name() in BANDIT_SAMPLERS:
+        if self.jiant_task_container.task_sampler.name() in BANDIT_SAMPLERS and update_low_perf_tasks:
             val_accs = np.array([evaluate_dict[task_name]["metrics"].minor["acc"] for task_name in task_name_list])
             idx = np.argsort(val_accs)[0:6]
             self.low_perf_tasks = [task_name_list[i] for i in idx]
