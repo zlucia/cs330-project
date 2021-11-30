@@ -14,6 +14,8 @@ import jiant.shared.model_setup as model_setup
 import jiant.utils.python.io as py_io
 import jiant.utils.zconf as zconf
 
+BANDIT_SAMPLERS = ["EpsilonGreedyMultiTaskSampler", "UCBMultiTaskSampler", "ThompsonSamplingMultiTaskSampler"]
+
 
 @zconf.run_config
 class RunConfiguration(zconf.RunConfig):
@@ -210,6 +212,17 @@ def run_loop(args: RunConfiguration, checkpoint=None):
                 eval_results_dict=test_results_dict,
                 path=os.path.join(args.output_dir, "test_preds.p"),
             )
+        
+        # Write rewards and actions' counts for bandit samplers
+        if runner.jiant_task_container.task_sampler.name() in BANDIT_SAMPLERS:
+            rewards = runner.jiant_task_container.task_sampler.get_rewards()
+            actions_cnt = runner.jiant_task_container.task_sampler.get_actions_cnt()
+            out_path = os.path.join(args.output_dir, "rewards.npy")
+            with open(out_path, 'wb') as out_file:
+                np.save(out_file, rewards)
+            out_path = os.path.join(args.output_dir, "actions_cnt.npy")
+            with open(out_path, 'wb') as out_file:
+                np.save(out_file, actions_cnt)
 
     if (
         not args.keep_checkpoint_when_done

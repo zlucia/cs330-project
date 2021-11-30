@@ -18,7 +18,7 @@ from jiant.shared.runner import (
 from jiant.utils.display import maybe_tqdm
 from jiant.utils.python.datastructures import InfiniteYield, ExtendedDataClassMixin
 
-BANDIT_SAMPLERS = ["EpsilonGreedyMultiTaskSampler", "UCBMultiTaskSampler"]
+BANDIT_SAMPLERS = ["EpsilonGreedyMultiTaskSampler", "UCBMultiTaskSampler", "ThompsonSamplingMultiTaskSampler"]
 
 
 @dataclass
@@ -60,7 +60,10 @@ class JiantRunner:
         self.rparams = rparams
         self.log_writer = log_writer
         self.prev_moi = None
-        self.low_perf_tasks = ['college_mathematics_test', 'business_ethics_test', 'abstract_algebra_test', 'high_school_statistics_test', 'college_physics_test', 'computer_security_test']
+        # Initialize to lowest 10% of tasks by accuracy in the multitask (uniform) training setting
+        self.low_perf_tasks = ['college_physics', 'high_school_computer_science', 'management', 'human_sexuality', 'conceptual_physics', 'miscellaneous']
+        # Initialize to lowest 10% of tasks by accuracy in the independent training setting
+        # self.low_perf_tasks = ['college_mathematics_test', 'business_ethics_test', 'abstract_algebra_test', 'high_school_statistics_test', 'college_physics_test', 'computer_security_test']
 
         self.model = self.jiant_model
         
@@ -176,12 +179,12 @@ class JiantRunner:
                 verbose=verbose,
             )
         
-        # if self.jiant_task_container.task_sampler.name() in BANDIT_SAMPLERS and update_low_perf_tasks:
-        #     val_accs = np.array([evaluate_dict[task_name]["metrics"].minor["acc"] for task_name in task_name_list])
-        #     idx = np.argsort(val_accs)[0:6]
-        #     self.low_perf_tasks = [task_name_list[i] for i in idx]
-        #     self.prev_moi = np.mean(val_accs[idx])
-        #     print(self.low_perf_tasks)
+        if self.jiant_task_container.task_sampler.name() in BANDIT_SAMPLERS and update_low_perf_tasks:
+            val_accs = np.array([evaluate_dict[task_name]["metrics"].minor["acc"] for task_name in task_name_list])
+            idx = np.argsort(val_accs)[0:6]
+            self.low_perf_tasks = [task_name_list[i] for i in idx]
+            self.prev_moi = np.mean(val_accs[idx])
+            print(self.low_perf_tasks)
         return evaluate_dict
 
     def run_test(self, task_name_list, verbose=True):

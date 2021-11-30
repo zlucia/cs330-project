@@ -9,11 +9,16 @@ def main():
 	csv = pd.read_csv(RESULTS)
 	subjects = np.array(csv.columns)
 	no_multitask = np.array(csv.iloc[0])
-	multitask = np.array(csv.iloc[1])
+	multitask_uniform = np.array(csv.iloc[1])
+	multitask_eps = np.array(csv.iloc[2])
 
-	idx = np.argsort(no_multitask)
-	print(np.mean(no_multitask[idx[0:11]]))
-	print(np.mean(multitask[idx[0:11]]))
+	idx = np.argsort(no_multitask)[0:6]
+	print(subjects[idx])
+	idx = np.argsort(multitask_uniform)[0:6]
+	print(subjects[idx])
+	# print(np.mean(no_multitask[idx]))
+	# print(np.mean(multitask_uniform[idx]))
+	# print(np.mean(multitask_eps[idx]))
 
 
 if __name__ == '__main__':
