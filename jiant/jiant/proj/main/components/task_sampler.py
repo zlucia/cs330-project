@@ -119,7 +119,7 @@ class UCBMultiTaskSampler(BaseMultiTaskSampler):
         rng: Union[int, np.random.RandomState, None],
         c: float,
     ):
-        super.__init__(task_dict=task_dict, rng=rng)
+        super().__init__(task_dict=task_dict, rng=rng)
         self.task_names = sorted(list(task_dict.keys()))
         # Weight on the sqrt term
         self.c = c
@@ -162,7 +162,7 @@ class ThompsonSamplingMultiTaskSampler(BaseMultiTaskSampler):
         init_a: int,
         init_b: int,
     ):
-        super.__init__(task_dict=task_dict, rng=rng)
+        super().__init__(task_dict=task_dict, rng=rng)
         self.task_names = sorted(list(task_dict.keys()))
         self.a = np.array([init_a] * len(self.task_names))
         self.b = np.array([init_b] * len(self.task_names))
