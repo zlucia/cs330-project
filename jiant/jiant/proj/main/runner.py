@@ -179,7 +179,7 @@ class JiantRunner:
                 verbose=verbose,
             )
         
-        if self.jiant_task_container.task_sampler.name() in BANDIT_SAMPLERS and update_low_perf_tasks:
+        if self.jiant_task_container.task_sampler.name() in BANDIT_SAMPLERS:
             val_accs = np.array([evaluate_dict[task_name]["metrics"].minor["acc"] for task_name in task_name_list])
             idx = np.argsort(val_accs)[0:6]
             self.low_perf_tasks = [task_name_list[i] for i in idx]
