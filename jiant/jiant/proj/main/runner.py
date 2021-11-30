@@ -61,7 +61,7 @@ class JiantRunner:
         self.log_writer = log_writer
         self.prev_moi = None
         # Initialize to lowest 10% of tasks by accuracy in the multitask (uniform) training setting
-        self.low_perf_tasks = ['college_physics', 'high_school_computer_science', 'management', 'human_sexuality', 'conceptual_physics', 'miscellaneous']
+        self.low_perf_tasks = ['college_physics_test', 'high_school_computer_science_test', 'management_test', 'human_sexuality_test', 'conceptual_physics_test', 'miscellaneous_test']
         # Initialize to lowest 10% of tasks by accuracy in the independent training setting
         # self.low_perf_tasks = ['college_mathematics_test', 'business_ethics_test', 'abstract_algebra_test', 'high_school_statistics_test', 'college_physics_test', 'computer_security_test']
 
