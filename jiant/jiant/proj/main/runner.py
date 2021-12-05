@@ -64,7 +64,8 @@ class JiantRunner:
         self.low_perf_tasks = ['college_physics_test', 'high_school_computer_science_test', 'management_test', 'human_sexuality_test', 'conceptual_physics_test', 'miscellaneous_test']
         # Initialize to lowest 10% of tasks by accuracy in the independent training setting
         # self.low_perf_tasks = ['college_mathematics_test', 'business_ethics_test', 'abstract_algebra_test', 'high_school_statistics_test', 'college_physics_test', 'computer_security_test']
-
+        # Record low perf tasks across training
+        self.record_low_perf_tasks = self.low_perf_tasks
         self.model = self.jiant_model
         
 
@@ -104,10 +105,8 @@ class JiantRunner:
 
     def run_train_step(self, train_dataloader_dict: dict, train_state: TrainState):
         self.jiant_model.train()
-        if self.jiant_task_container.task_sampler.name() in BANDIT_SAMPLERS:
-            task_i, task_name, task = self.jiant_task_container.task_sampler.pop()
-        else:
-            task_name, task = self.jiant_task_container.task_sampler.pop()
+        # pop implemented with this return signature for UniformMultiTaskSampler and BANDIT_SAMPLERS
+        task_i, task_name, task = self.jiant_task_container.task_sampler.pop()
         task_specific_config = self.jiant_task_container.task_specific_configs[task_name]
 
         loss_val = 0
@@ -146,7 +145,7 @@ class JiantRunner:
         # TODO: Decide what metric of interest (average over difficult tasks for independent or uniform MTL?) to use
         # Calculate validation performance on metric of interest, diff using prev, record_reward, update prev when using a bandit sampler
         if self.jiant_task_container.task_sampler.name() in BANDIT_SAMPLERS:
-            evaluate_dict = self.run_val(self.low_perf_tasks, use_subset=True, verbose=False)
+            evaluate_dict = self.run_val(self.low_perf_tasks, use_subset=True, verbose=False, update_low_perf_tasks=False)
             val_accs = np.array([evaluate_dict[task_name]["metrics"].minor["acc"] for task_name in self.low_perf_tasks])
             curr_moi = np.mean(val_accs)
 
@@ -179,12 +178,13 @@ class JiantRunner:
                 verbose=verbose,
             )
         
-        if self.jiant_task_container.task_sampler.name() in BANDIT_SAMPLERS and update_low_perf_tasks:
+        if update_low_perf_tasks:
             val_accs = np.array([evaluate_dict[task_name]["metrics"].minor["acc"] for task_name in task_name_list])
             idx = np.argsort(val_accs)[0:6]
             self.low_perf_tasks = [task_name_list[i] for i in idx]
-            self.prev_moi = np.mean(val_accs[idx])
-            print(self.low_perf_tasks)
+            self.record_low_perf_tasks = self.record_low_perf_tasks + self.low_perf_tasks
+            if self.jiant_task_container.task_sampler.name() in BANDIT_SAMPLERS:
+                self.prev_moi = np.mean(val_accs[idx])
         return evaluate_dict
 
     def run_test(self, task_name_list, verbose=True):

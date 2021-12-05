@@ -2,6 +2,7 @@ import os
 import torch
 import wandb
 import numpy as np
+import pickle
 
 import jiant.proj.main.modeling.model_setup as jiant_model_setup
 import jiant.proj.main.runner as jiant_runner
@@ -213,16 +214,31 @@ def run_loop(args: RunConfiguration, checkpoint=None):
                 path=os.path.join(args.output_dir, "test_preds.p"),
             )
         
-        # Write rewards and actions' counts for bandit samplers
+        # Turn list to numpy array
+        # Convert list with sequence of selected tasks indices to array
+        selected_tasks = np.array(runner.jiant_task_container.task_sampler.get_selected_tasks())
+        actions_cnt = runner.jiant_task_container.task_sampler.get_actions_cnt()
+        record_low_perf_tasks = runner.record_low_perf_tasks
+
+        # Write sequence of selected tasks
+        out_path = os.path.join(args.output_dir, "selected_tasks.npy")
+        with open(out_path, 'wb') as out_file:
+            np.save(out_file, selected_tasks)
+        # Write action counts for each task
+        out_path = os.path.join(args.output_dir, "actions_cnt.npy")
+        with open(out_path, 'wb') as out_file:
+            np.save(out_file, actions_cnt)
+        # Write low perf tasks across training
+        out_path = os.path.join(args.output_dir, "record_low_perf_tasks.pkl")
+        with open(out_path, 'wb') as out_file:
+            pickle.dump(record_low_perf_tasks, out_file)
+        
         if runner.jiant_task_container.task_sampler.name() in BANDIT_SAMPLERS:
             rewards = runner.jiant_task_container.task_sampler.get_rewards()
-            actions_cnt = runner.jiant_task_container.task_sampler.get_actions_cnt()
+            # Write average rewards observed for each task
             out_path = os.path.join(args.output_dir, "rewards.npy")
             with open(out_path, 'wb') as out_file:
                 np.save(out_file, rewards)
-            out_path = os.path.join(args.output_dir, "actions_cnt.npy")
-            with open(out_path, 'wb') as out_file:
-                np.save(out_file, actions_cnt)
 
     if (
         not args.keep_checkpoint_when_done
