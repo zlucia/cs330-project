@@ -258,8 +258,6 @@ class SimpleAPIMultiTaskConfigurator(zconf.RunConfig):
     sampler_type = zconf.attr(type=str, default="UniformMultiTaskSampler")
     epsilon = zconf.attr(type=float, default=None)
     c = zconf.attr(type=float, default=None)
-    init_a = zconf.attr(type=int, default=None)
-    init_b = zconf.attr(type=int, default=None)
 
     @classmethod
     def parse_task_name_list(cls, task_name_list_arg):
@@ -401,10 +399,6 @@ class SimpleAPIMultiTaskConfigurator(zconf.RunConfig):
         elif self.sampler_type == "UCBMultiTaskSampler":
             assert self.c is not None
             sampler_config["c"] = self.c
-        elif self.sampler_type == "ThompsonSamplingMultiTaskSampler":
-            assert self.init_a is not None and self.init_b is not None
-            sampler_config["init_a"] = self.init_a
-            sampler_config["init_b"] = self.init_b
         # # We sample proportionally by default, unless our training examples are capped per task
         # if self.train_examples_cap is None:
         #     sampler_config = {
