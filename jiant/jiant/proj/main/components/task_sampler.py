@@ -203,7 +203,7 @@ class ThompsonSamplingMultiTaskSampler(BaseMultiTaskSampler):
         self.selected_tasks = []
     
     def pop(self):
-        samples = np.array([rng.normal(loc=self.mu[i], scale=np.sqrt(self.var[i])) for i in range(len(self.task_names))])
+        samples = np.array([self.rng.normal(loc=self.mu[i], scale=np.sqrt(self.var[i])) for i in range(len(self.task_names))])
         i = np.argmax(samples)
         self.selected_tasks.append(i)
         task_name = self.task_names[i]
