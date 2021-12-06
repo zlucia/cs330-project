@@ -43,6 +43,9 @@ class UniformMultiTaskSampler(BaseMultiTaskSampler):
     
     def get_selected_tasks(self):
         return self.selected_tasks
+
+    def get_actions_cnt(self):
+        return self.actions_cnt
     
     def name(self):
         return "UniformMultiTaskSampler"
