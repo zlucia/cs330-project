@@ -119,7 +119,7 @@ class EpsilonGreedyMultiTaskSampler(BaseMultiTaskSampler):
         return i, task_name, self.task_dict[task_name]
     
     def record_reward(self, reward: float, reward_idx: int):
-        n = self.rewards_cnt[reward_idx]
+        n = self.actions_cnt[reward_idx]
         # Moving average
         self.rewards[reward_idx] = (n * self.rewards[reward_idx] + reward) / (n + 1)
         self.actions_cnt[reward_idx] += 1
