@@ -179,7 +179,7 @@ class UCBMultiTaskSampler(BaseMultiTaskSampler):
         return self.rewards
     
     def get_actions_cnt(self):
-        return self.rewards_cnt
+        return self.actions_cnt
 
     def name(self):
         return "UCBMultiTaskSampler"
