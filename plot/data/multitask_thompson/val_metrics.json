@@ -1,0 +1,516 @@
+{
+  "aggregated": 0.26110898146287065,
+  "abstract_algebra_test": {
+    "loss": 1.3835966076169695,
+    "metrics": {
+      "major": 0.29,
+      "minor": {
+        "acc": 0.29
+      }
+    }
+  },
+  "anatomy_test": {
+    "loss": 1.4353913466135662,
+    "metrics": {
+      "major": 0.22962962962962963,
+      "minor": {
+        "acc": 0.22962962962962963
+      }
+    }
+  },
+  "astronomy_test": {
+    "loss": 1.3952195167541503,
+    "metrics": {
+      "major": 0.2894736842105263,
+      "minor": {
+        "acc": 0.2894736842105263
+      }
+    }
+  },
+  "business_ethics_test": {
+    "loss": 1.3530287061418806,
+    "metrics": {
+      "major": 0.38,
+      "minor": {
+        "acc": 0.38
+      }
+    }
+  },
+  "clinical_knowledge_test": {
+    "loss": 1.426178539500517,
+    "metrics": {
+      "major": 0.2679245283018868,
+      "minor": {
+        "acc": 0.2679245283018868
+      }
+    }
+  },
+  "college_biology_test": {
+    "loss": 1.4064783520168729,
+    "metrics": {
+      "major": 0.24305555555555555,
+      "minor": {
+        "acc": 0.24305555555555555
+      }
+    }
+  },
+  "college_chemistry_test": {
+    "loss": 1.395891853741237,
+    "metrics": {
+      "major": 0.22,
+      "minor": {
+        "acc": 0.22
+      }
+    }
+  },
+  "college_computer_science_test": {
+    "loss": 1.3861641032355172,
+    "metrics": {
+      "major": 0.24,
+      "minor": {
+        "acc": 0.24
+      }
+    }
+  },
+  "college_mathematics_test": {
+    "loss": 1.3810599872044154,
+    "metrics": {
+      "major": 0.24,
+      "minor": {
+        "acc": 0.24
+      }
+    }
+  },
+  "college_medicine_test": {
+    "loss": 1.3916096037084407,
+    "metrics": {
+      "major": 0.21965317919075145,
+      "minor": {
+        "acc": 0.21965317919075145
+      }
+    }
+  },
+  "college_physics_test": {
+    "loss": 1.3624438217708044,
+    "metrics": {
+      "major": 0.3333333333333333,
+      "minor": {
+        "acc": 0.3333333333333333
+      }
+    }
+  },
+  "computer_security_test": {
+    "loss": 1.3793873957225256,
+    "metrics": {
+      "major": 0.32,
+      "minor": {
+        "acc": 0.32
+      }
+    }
+  },
+  "conceptual_physics_test": {
+    "loss": 1.3866305271784465,
+    "metrics": {
+      "major": 0.2978723404255319,
+      "minor": {
+        "acc": 0.2978723404255319
+      }
+    }
+  },
+  "econometrics_test": {
+    "loss": 1.3911773264408112,
+    "metrics": {
+      "major": 0.2894736842105263,
+      "minor": {
+        "acc": 0.2894736842105263
+      }
+    }
+  },
+  "electrical_engineering_test": {
+    "loss": 1.4064993619918824,
+    "metrics": {
+      "major": 0.2620689655172414,
+      "minor": {
+        "acc": 0.2620689655172414
+      }
+    }
+  },
+  "elementary_mathematics_test": {
+    "loss": 1.3879036406675975,
+    "metrics": {
+      "major": 0.21164021164021163,
+      "minor": {
+        "acc": 0.21164021164021163
+      }
+    }
+  },
+  "formal_logic_test": {
+    "loss": 1.395006999373436,
+    "metrics": {
+      "major": 0.2857142857142857,
+      "minor": {
+        "acc": 0.2857142857142857
+      }
+    }
+  },
+  "global_facts_test": {
+    "loss": 1.3863711868013655,
+    "metrics": {
+      "major": 0.22,
+      "minor": {
+        "acc": 0.22
+      }
+    }
+  },
+  "high_school_biology_test": {
+    "loss": 1.3881962954998017,
+    "metrics": {
+      "major": 0.25161290322580643,
+      "minor": {
+        "acc": 0.25161290322580643
+      }
+    }
+  },
+  "high_school_chemistry_test": {
+    "loss": 1.438885156924908,
+    "metrics": {
+      "major": 0.23645320197044334,
+      "minor": {
+        "acc": 0.23645320197044334
+      }
+    }
+  },
+  "high_school_computer_science_test": {
+    "loss": 1.485807146344866,
+    "metrics": {
+      "major": 0.22,
+      "minor": {
+        "acc": 0.22
+      }
+    }
+  },
+  "high_school_european_history_test": {
+    "loss": 1.4663005417043513,
+    "metrics": {
+      "major": 0.16363636363636364,
+      "minor": {
+        "acc": 0.16363636363636364
+      }
+    }
+  },
+  "high_school_geography_test": {
+    "loss": 1.3604041521365826,
+    "metrics": {
+      "major": 0.3686868686868687,
+      "minor": {
+        "acc": 0.3686868686868687
+      }
+    }
+  },
+  "high_school_government_and_politics_test": {
+    "loss": 1.3581451360995953,
+    "metrics": {
+      "major": 0.29015544041450775,
+      "minor": {
+        "acc": 0.29015544041450775
+      }
+    }
+  },
+  "high_school_macroeconomics_test": {
+    "loss": 1.4030645847320558,
+    "metrics": {
+      "major": 0.2153846153846154,
+      "minor": {
+        "acc": 0.2153846153846154
+      }
+    }
+  },
+  "high_school_mathematics_test": {
+    "loss": 1.4016865211374618,
+    "metrics": {
+      "major": 0.2074074074074074,
+      "minor": {
+        "acc": 0.2074074074074074
+      }
+    }
+  },
+  "high_school_microeconomics_test": {
+    "loss": 1.3885413646697997,
+    "metrics": {
+      "major": 0.23109243697478993,
+      "minor": {
+        "acc": 0.23109243697478993
+      }
+    }
+  },
+  "high_school_physics_test": {
+    "loss": 1.4043620228767395,
+    "metrics": {
+      "major": 0.2251655629139073,
+      "minor": {
+        "acc": 0.2251655629139073
+      }
+    }
+  },
+  "high_school_psychology_test": {
+    "loss": 1.3804635899407522,
+    "metrics": {
+      "major": 0.28440366972477066,
+      "minor": {
+        "acc": 0.28440366972477066
+      }
+    }
+  },
+  "high_school_statistics_test": {
+    "loss": 1.3904311316353934,
+    "metrics": {
+      "major": 0.2638888888888889,
+      "minor": {
+        "acc": 0.2638888888888889
+      }
+    }
+  },
+  "high_school_us_history_test": {
+    "loss": 1.3636593543566191,
+    "metrics": {
+      "major": 0.29901960784313725,
+      "minor": {
+        "acc": 0.29901960784313725
+      }
+    }
+  },
+  "high_school_world_history_test": {
+    "loss": 1.44133407274882,
+    "metrics": {
+      "major": 0.189873417721519,
+      "minor": {
+        "acc": 0.189873417721519
+      }
+    }
+  },
+  "human_aging_test": {
+    "loss": 1.4422097376414709,
+    "metrics": {
+      "major": 0.28699551569506726,
+      "minor": {
+        "acc": 0.28699551569506726
+      }
+    }
+  },
+  "human_sexuality_test": {
+    "loss": 1.5226485994127061,
+    "metrics": {
+      "major": 0.2366412213740458,
+      "minor": {
+        "acc": 0.2366412213740458
+      }
+    }
+  },
+  "international_law_test": {
+    "loss": 1.387429416179657,
+    "metrics": {
+      "major": 0.32231404958677684,
+      "minor": {
+        "acc": 0.32231404958677684
+      }
+    }
+  },
+  "jurisprudence_test": {
+    "loss": 1.382102710860116,
+    "metrics": {
+      "major": 0.2037037037037037,
+      "minor": {
+        "acc": 0.2037037037037037
+      }
+    }
+  },
+  "logical_fallacies_test": {
+    "loss": 1.3367072452198376,
+    "metrics": {
+      "major": 0.3619631901840491,
+      "minor": {
+        "acc": 0.3619631901840491
+      }
+    }
+  },
+  "machine_learning_test": {
+    "loss": 1.3783156190599715,
+    "metrics": {
+      "major": 0.26785714285714285,
+      "minor": {
+        "acc": 0.26785714285714285
+      }
+    }
+  },
+  "management_test": {
+    "loss": 1.3887086936405726,
+    "metrics": {
+      "major": 0.27184466019417475,
+      "minor": {
+        "acc": 0.27184466019417475
+      }
+    }
+  },
+  "marketing_test": {
+    "loss": 1.278021017710368,
+    "metrics": {
+      "major": 0.49572649572649574,
+      "minor": {
+        "acc": 0.49572649572649574
+      }
+    }
+  },
+  "medical_genetics_test": {
+    "loss": 1.4640809978757585,
+    "metrics": {
+      "major": 0.22,
+      "minor": {
+        "acc": 0.22
+      }
+    }
+  },
+  "miscellaneous_test": {
+    "loss": 1.3712229242130203,
+    "metrics": {
+      "major": 0.3128991060025543,
+      "minor": {
+        "acc": 0.3128991060025543
+      }
+    }
+  },
+  "moral_disputes_test": {
+    "loss": 1.5152302384376526,
+    "metrics": {
+      "major": 0.24566473988439305,
+      "minor": {
+        "acc": 0.24566473988439305
+      }
+    }
+  },
+  "moral_scenarios_test": {
+    "loss": 1.3867875103439604,
+    "metrics": {
+      "major": 0.26145251396648045,
+      "minor": {
+        "acc": 0.26145251396648045
+      }
+    }
+  },
+  "nutrition_test": {
+    "loss": 1.3898624420166015,
+    "metrics": {
+      "major": 0.2222222222222222,
+      "minor": {
+        "acc": 0.2222222222222222
+      }
+    }
+  },
+  "philosophy_test": {
+    "loss": 1.4487431049346924,
+    "metrics": {
+      "major": 0.24115755627009647,
+      "minor": {
+        "acc": 0.24115755627009647
+      }
+    }
+  },
+  "prehistory_test": {
+    "loss": 1.3992763133276076,
+    "metrics": {
+      "major": 0.25,
+      "minor": {
+        "acc": 0.25
+      }
+    }
+  },
+  "professional_accounting_test": {
+    "loss": 1.3834376798735724,
+    "metrics": {
+      "major": 0.26595744680851063,
+      "minor": {
+        "acc": 0.26595744680851063
+      }
+    }
+  },
+  "professional_law_test": {
+    "loss": 1.3865431224306424,
+    "metrics": {
+      "major": 0.2405475880052151,
+      "minor": {
+        "acc": 0.2405475880052151
+      }
+    }
+  },
+  "professional_medicine_test": {
+    "loss": 1.3910129070281982,
+    "metrics": {
+      "major": 0.28308823529411764,
+      "minor": {
+        "acc": 0.28308823529411764
+      }
+    }
+  },
+  "professional_psychology_test": {
+    "loss": 1.3865735591986241,
+    "metrics": {
+      "major": 0.2434640522875817,
+      "minor": {
+        "acc": 0.2434640522875817
+      }
+    }
+  },
+  "public_relations_test": {
+    "loss": 1.382835132735116,
+    "metrics": {
+      "major": 0.2,
+      "minor": {
+        "acc": 0.2
+      }
+    }
+  },
+  "security_studies_test": {
+    "loss": 1.4380331188440323,
+    "metrics": {
+      "major": 0.2163265306122449,
+      "minor": {
+        "acc": 0.2163265306122449
+      }
+    }
+  },
+  "sociology_test": {
+    "loss": 1.5169769250429594,
+    "metrics": {
+      "major": 0.2885572139303483,
+      "minor": {
+        "acc": 0.2885572139303483
+      }
+    }
+  },
+  "us_foreign_policy_test": {
+    "loss": 1.4395004851477486,
+    "metrics": {
+      "major": 0.22,
+      "minor": {
+        "acc": 0.22
+      }
+    }
+  },
+  "virology_test": {
+    "loss": 1.3964864232323386,
+    "metrics": {
+      "major": 0.18674698795180722,
+      "minor": {
+        "acc": 0.18674698795180722
+      }
+    }
+  },
+  "world_religions_test": {
+    "loss": 1.3923045505176892,
+    "metrics": {
+      "major": 0.25146198830409355,
+      "minor": {
+        "acc": 0.25146198830409355
+      }
+    }
+  }
+}
